@@ -22,15 +22,11 @@
 - Streamlit
 
 ### Screenshots
-<img width="1918" height="912" alt="image" src="https://github.com/user-attachments/assets/d3e8c960-2e6a-411f-b1d5-cf51e883f843" />
-<img width="1918" height="902" alt="image" src="https://github.com/user-attachments/assets/c4c3259b-14f2-4e56-a602-e1f4ddcb1cad" />
-<img width="1918" height="875" alt="image" src="https://github.com/user-attachments/assets/a4d744d3-9ad1-4b6a-b2bd-537a8ff6c2f9" />
-<img width="1918" height="887" alt="image" src="https://github.com/user-attachments/assets/d31ea6e8-1894-4c46-bd26-94795f61f3b5" />
-<img width="1918" height="888" alt="image" src="https://github.com/user-attachments/assets/e1f832d1-403d-4fb5-8a08-0f54a7d6b3f8" />
-
-
-
-
+<img width="1918" height="911" alt="image" src="https://github.com/user-attachments/assets/3150172d-b396-4e8b-8dc3-871dccc9b5ce" />
+<img width="1918" height="912" alt="image" src="https://github.com/user-attachments/assets/d51641e4-c1aa-49ff-82d8-770deaac6d02" />
+<img width="1918" height="911" alt="image" src="https://github.com/user-attachments/assets/329367ca-6033-4485-ab46-479a77dcd3ae" />
+<img width="1918" height="847" alt="image" src="https://github.com/user-attachments/assets/f3f8e7df-6236-44cc-8faf-13b5fb2ceafe" />
+<img width="1917" height="851" alt="image" src="https://github.com/user-attachments/assets/cb2233a1-ba7b-44a7-a20b-04315f2081ee" />
 
 ### Running locally in IDE⚙️
 Before running the application files in your IDE,
