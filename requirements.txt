@@ -1,6 +1,5 @@
 pandas
 numpy
-time
 requests
 plotly
 streamlit
