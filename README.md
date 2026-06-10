@@ -2,7 +2,9 @@
 
 <p align="center">
   <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fgithub.com%2Freshmaharidhas%2FWeathercast-streamlit"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Freshmaharidhas%2FWeathercast-streamlit&label=Visitors&labelColor=%2300ff00&countColor=%23000000&style=plastic&labelStyle=none" /></a>
-  
+  <img alt="GitHub file size in bytes" src="https://img.shields.io/github/size/reshmaharidhas/Weathercast-streamlit/main.py?label=file%20size">
+  <img alt="GitHub Created At" src="https://img.shields.io/github/created-at/reshmaharidhas/Weathercast-streamlit">
+  <img alt="GitHub License" src="https://img.shields.io/github/license/reshmaharidhas/Weathercast-streamlit">
 </p>
 'Weathercast streamlit' is a web app to check weather for different locations built using Python and Streamlit.
 
