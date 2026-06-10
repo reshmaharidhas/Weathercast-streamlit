@@ -18,6 +18,36 @@
 ### API used
 - WeatherAPI
 
+### Features
+- Current weather information of selected city.
+  - Current temperature and description of current temperature (sunny☀️/cloudy☁️/rainy🌧️/thunder⛈️/Snow)
+  - Feels-like temperature
+  - Wind speed
+  - Humidity
+  - Dew point
+  - Visibility
+  - Pressure
+  - UV index
+  - Air Quality Index (AQI)
+- Displays global cities with the same name of the city you searched in dropdown to let the user choose from.
+- Displays sunrise🌅, sunset🌇, moon rise, and moon set🌕 timing of present day in the selected city.
+- Present day's air pollutants and their concentrations to safeguard your respiratory health.
+- Multilingual weather current condition displayed.
+- Displays the hourly weather forecast for the next 2 days.
+- Displays the current air pollution index with a human face depicting the air pollution level of the selected city.
+- Bar chart📊 to visualize the present day's hourly UV index with varied colors.
+- Search for weather data for any city around the world in a navigation friendly interface.🔍
+- Interactive hourly weather forecast for the next 3 days including the present day visualized using line charts for,
+  - Temperature
+  - Pressure
+  - Wind speed
+  - Humidity
+  - Chance of rain
+  - Chance of snow
+  - Visibility
+  - Dew point
+  - UV index (bar chart)
+
 ### Deployment Tools
 - Streamlit
 
