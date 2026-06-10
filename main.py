@@ -8,10 +8,12 @@ import streamlit as st
 headers = {"authorization":st.secrets["API_KEY"],
            "content-type":"application/json"}
 
-st.set_page_config(layout="wide")
+st.set_page_config(layout="wide",page_title="WeatherCast web",page_icon="🌤️")
 st.session_state["is_unit_celsius"] = True
+# Fetching API key for Weatherapi website from secrets.
 API_KEY = st.secrets["API_KEY"]
 
+# Caching fetched data for 1 month from API.
 @st.cache_data(ttl=2592000)
 def get_multiple_locations_list(ans):
     multiple_locations_url = f"https://api.weatherapi.com/v1/search.json?key={API_KEY}&q={ans}"
@@ -21,7 +23,7 @@ def get_multiple_locations_list(ans):
 col1, col2, col3 = st.columns([0.7,0.1,0.2],vertical_alignment="bottom")
 with col1:
     with st.container():
-        st.markdown("# :blue[WeatherCast]", text_alignment="center")
+        st.markdown("# ☀️:blue[WeatherCast]⛈️", text_alignment="center")
 with col2:
     ans = st.selectbox("Choose city🔍",options=["Dubai","Auckland","Berlin","Abu Dhabi","New York","Paris"],accept_new_options=True)
     multiple_locations_response = get_multiple_locations_list(ans)
@@ -29,19 +31,20 @@ with col2:
         multiple_locations_response = multiple_locations_response.json()
         multiple_locations_name_region_country = []
         multiple_locations_lat_lon = []
+        # Getting all list of cities with the searched name around the world.
         for every_city in multiple_locations_response:
             name_region_country = every_city["name"]+", "+every_city["region"]+", "+every_city["country"]
             multiple_locations_name_region_country.append(name_region_country)
             multiple_locations_lat_lon.append([every_city["lat"],every_city["lon"]])
         with col3:
-            exact_location = st.selectbox("Choose exact location",options=multiple_locations_name_region_country)
+            exact_location = st.selectbox("Choose exact location📍",options=multiple_locations_name_region_country)
             selected_exact_location_index = multiple_locations_name_region_country.index(exact_location)
             selected_latitude_longitude = multiple_locations_lat_lon[selected_exact_location_index]
     else:
         st.write("Unable to fetch multiple locations")
 
 
-
+# Caching fetched data from API for 1 hour.
 @st.cache_data(ttl=3600)
 def get_current_weather(selected_latitude_longitude):
     lat = selected_latitude_longitude[0]
@@ -51,6 +54,7 @@ def get_current_weather(selected_latitude_longitude):
     current_weather_response = requests.get(current_weather_url)
     return current_weather_response
 
+# Caching fetched data from API for 1 hour.
 @st.cache_data(ttl=3600)
 def get_weather_forecast(selected_latitude_longitude):
     lat = selected_latitude_longitude[0]
@@ -213,6 +217,7 @@ with current_weather_tab:
                     weather_temp = pd.DataFrame({"hour":list(range(0,24)),"temp_c":today_temperature})
                     fig = px.line(weather_temp,x="hour",y="temp_c",markers=True,title="🌡️Today Temperature Hourly forecast",labels={"temp_c":"Temperature (Celsius)","hour":"Hour"},color_discrete_sequence=["orange"])
                     fig.update_traces(marker=dict(size=12, symbol="circle-dot"))
+                    fig.update_layout(title_x=0.3)
                     fig.update_xaxes(tickmode="linear")
                     st.plotly_chart(fig,key="today_temperature_hourly_forecast")
                 with st.container():
@@ -226,6 +231,7 @@ with current_weather_tab:
                                  color_discrete_map={'Low risk': 'lime','Moderate risk': 'yellow',
                                 'High risk':'orange',"Very high risk":"red","Extreme risk":"purple"},
                                  category_orders={"uv_status":["Low risk","Moderate risk","High risk","Very high risk","Extreme risk"]})
+                    fig.update_layout(title_x=0.3)
                     fig.update_xaxes(tickmode="linear")
                     st.plotly_chart(fig)
         st.markdown(f"Last updated on {response['current']['last_updated']} *({response['location']['tz_id']})*")
@@ -265,13 +271,16 @@ with forecast_tab:
         else:
             fig = px.bar(df_melted, x="hour", y=selectbox_options[selectbox_index], color="Date",title=selectbox_options[selectbox_index],
                           labels={selectbox_options[selectbox_index]: "UV index", "hour": "Hour"})
+        fig.update_layout(title_x=0.5)
         fig.update_xaxes(tickmode="linear")
         st.plotly_chart(fig)
 
 # Historical weather data
 with history_tab:
     with st.container(border=True):
+        # selectbox to choose variable to view yesterday's weather.
         yesterday_var_selected = st.selectbox("Choose variable to view yesterday's weather data",options=["Temperature","Wind speed","Pressure","Humidity","UV index","Dew point","Visibility","Chance of rain","Chance of snow"])
+        # Getting date of yesterday.
         yesterday = date.today() - timedelta(days=1)
         selectbox_options = ["Temperature","Wind speed","Pressure","Humidity","UV index","Dew point","Visibility","Chance of rain","Chance of snow"]
         selectbox_index = selectbox_options.index(yesterday_var_selected)
@@ -292,6 +301,7 @@ with history_tab:
         else:
             fig = px.bar(df_melted, x="hour", y=selectbox_options[selectbox_index], color_discrete_sequence=["coral"],title=selectbox_options[selectbox_index],
                           labels={selectbox_options[selectbox_index]: "UV index", "hour": "Hour"})
+        fig.update_layout(title_x=0.5)
         fig.update_xaxes(tickmode="linear")
         st.plotly_chart(fig)
 
