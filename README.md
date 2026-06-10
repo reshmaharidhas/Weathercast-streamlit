@@ -1,5 +1,9 @@
 # Weathercast streamlit [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/) ![Streamlit](https://img.shields.io/badge/Streamlit-%23FE4B4B.svg?style=for-the-badge&logo=streamlit&logoColor=white)
 
+<p align="center">
+  <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fgithub.com%2Freshmaharidhas%2FWeathercast-streamlit"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Freshmaharidhas%2FWeathercast-streamlit&label=Visitors&labelColor=%2300ff00&countColor=%23000000&style=plastic&labelStyle=none" /></a>
+  
+</p>
 'Weathercast streamlit' is a web app to check weather for different locations built using Python and Streamlit.
 ## Tech Stack💻
 - Python
