@@ -22,8 +22,8 @@
 - Streamlit
 
 ### Screenshots
-<img width="1918" height="911" alt="image" src="https://github.com/user-attachments/assets/3150172d-b396-4e8b-8dc3-871dccc9b5ce" />
-<img width="1918" height="912" alt="image" src="https://github.com/user-attachments/assets/d51641e4-c1aa-49ff-82d8-770deaac6d02" />
+<img width="1917" height="867" alt="image" src="https://github.com/user-attachments/assets/ed564ceb-108b-4c29-a786-6c521e52f2e7" />
+<img width="1917" height="862" alt="image" src="https://github.com/user-attachments/assets/625741d3-7d8b-4805-91b7-efe103c2931a" />
 <img width="1918" height="911" alt="image" src="https://github.com/user-attachments/assets/329367ca-6033-4485-ab46-479a77dcd3ae" />
 <img width="1918" height="847" alt="image" src="https://github.com/user-attachments/assets/f3f8e7df-6236-44cc-8faf-13b5fb2ceafe" />
 <img width="1917" height="851" alt="image" src="https://github.com/user-attachments/assets/cb2233a1-ba7b-44a7-a20b-04315f2081ee" />
