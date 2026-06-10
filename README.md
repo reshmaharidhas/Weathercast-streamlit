@@ -5,6 +5,7 @@
   
 </p>
 'Weathercast streamlit' is a web app to check weather for different locations built using Python and Streamlit.
+
 ## Tech Stack💻
 - Python
 - Streamlit
