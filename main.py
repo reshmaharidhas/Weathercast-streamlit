@@ -1,6 +1,7 @@
 import time
 import pandas as pd
 import requests
+import json
 import plotly.express as px
 from datetime import date, timedelta
 import streamlit as st
@@ -12,6 +13,22 @@ st.set_page_config(layout="wide",page_title="WeatherCast web",page_icon="🌤️
 st.session_state["is_unit_celsius"] = True
 # Fetching API key for Weatherapi website from secrets.
 API_KEY = st.secrets["API_KEY"]
+# Language
+languages_international = ["Arabic","Bengali","Bulgarian","Chinese Simplified","Chinese Traditional","Czech",
+                          "Danish","Dutch","Finnish","French","German","Greek","Hindi","Hungarian",
+                          "Italian","Japanese","Javanese","Korean","Mandarin","Marathi","Polish","Portuguese",
+                          "Punjabi","Romanian","Russian","Serbian","Sinhalese","Slovak","Spanish","Swedish",
+                          "Tamil","Telugu","Turkish","Ukrainian","Urdu","Vietnamese","Wu (Shanghainese)",
+                          "Xiang","Yue (Cantonese)","Zulu"]
+# Weather condition codes
+condition_codes = [1000,1003,1006,1009,1012,1015,1018,1021,1024,1027,1030,1033,1036,1039,1042,1045,1048,1063,1066,
+                   1069,1072,1087,1114,1117,1135,1147,1150,1153,1168,1171,1180,1183,1186,1189,1192,1195,1198,
+                   1201,1204,1207,1210,1213,1216,1219,1222,1225,1237,1240,1243,1246,1249,1252,1255,1258,1261,
+                   1264,1273,1276,1279,1282]
+# Accessing JSON file
+with open('conditions.json', 'r', encoding='utf-8') as file:
+    conditions_json = json.load(file)
+
 
 # Caching fetched data for 1 month from API.
 @st.cache_data(ttl=2592000)
@@ -20,12 +37,20 @@ def get_multiple_locations_list(ans):
     multiple_locations_response = requests.get(multiple_locations_url)
     return multiple_locations_response
 
-col1, col2, col3 = st.columns([0.7,0.1,0.2],vertical_alignment="bottom")
+col_language, col1, col2, col3 = st.columns([0.1,0.6,0.1,0.2],vertical_alignment="bottom")
+with col_language:
+    language_selected = st.selectbox("🌐Select language",
+                 options=["Arabic","Bengali","Bulgarian","Chinese Simplified","Chinese Traditional","Czech",
+                          "Danish","Dutch","Finnish","French","German","Greek","Hindi","Hungarian",
+                          "Italian","Japanese","Javanese","Korean","Mandarin","Marathi","Polish","Portuguese",
+                          "Punjabi","Romanian","Russian","Serbian","Sinhalese","Slovak","Spanish","Swedish",
+                          "Tamil","Telugu","Turkish","Ukrainian","Urdu","Vietnamese","Wu (Shanghainese)",
+                          "Xiang","Yue (Cantonese)","Zulu"],index=None,placeholder="Language")
 with col1:
     with st.container():
         st.markdown("# ☀️:blue[WeatherCast]⛈️", text_alignment="center")
 with col2:
-    ans = st.selectbox("Choose city🔍",options=["Dubai","Auckland","Berlin","Abu Dhabi","New York","Paris"],accept_new_options=True)
+    ans = st.selectbox("🔍Choose city",options=["Dubai","Auckland","Berlin","Abu Dhabi","New York","Paris"],accept_new_options=True)
     multiple_locations_response = get_multiple_locations_list(ans)
     if multiple_locations_response.status_code==200:
         multiple_locations_response = multiple_locations_response.json()
@@ -37,7 +62,7 @@ with col2:
             multiple_locations_name_region_country.append(name_region_country)
             multiple_locations_lat_lon.append([every_city["lat"],every_city["lon"]])
         with col3:
-            exact_location = st.selectbox("Choose exact location📍",options=multiple_locations_name_region_country)
+            exact_location = st.selectbox("📍Choose exact location",options=multiple_locations_name_region_country)
             selected_exact_location_index = multiple_locations_name_region_country.index(exact_location)
             selected_latitude_longitude = multiple_locations_lat_lon[selected_exact_location_index]
     else:
@@ -122,13 +147,28 @@ with current_weather_tab:
                     country_name = response["location"]["country"]
                     curr_temperature_c = response["current"]["temp_c"]
                     feels_like_temp_c = response["current"]["feelslike_c"]
+                    is_day = response["current"]["is_day"]  # 1 means Yes, 0 means No.
                     temp_condition = response["current"]["condition"]["text"]
                     temperature_image = response["current"]["condition"]["icon"]
+                    current_condition_code = response["current"]["condition"]["code"]
+                    index_current_condition_code = condition_codes.index(current_condition_code)
+                    if language_selected!=None:
+                        index_language_selected = languages_international.index(language_selected)
                     st.markdown(f"#### 📍{city_name}")
                     st.markdown(f"###### {country_name}")
                     st.markdown(f"# {curr_temperature_c}°C")
                     st.markdown(f"###### Feels like {feels_like_temp_c}°C")
-                    st.markdown(f"##### {temp_condition}")
+
+                    if language_selected==None:
+                        st.markdown(f"##### {temp_condition}")
+                    else:
+                        if is_day==1:
+                            day_text = conditions_json[index_current_condition_code]["languages"][index_language_selected]["day_text"]
+                            st.markdown(f"##### {day_text}")
+                        else:
+                            night_text = conditions_json[index_current_condition_code]["languages"][index_language_selected][
+                                    "night_text"]
+                            st.markdown(f"##### {night_text}")
                 with current_weather_col1_subcol_2:
                     wind_speed_mph = response["current"]["wind_mph"]
                     pressure_mb = response["current"]["pressure_mb"]
