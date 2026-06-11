@@ -47,6 +47,7 @@
   - Visibility
   - Dew point
   - UV index (bar chart)
+- Satellite map with location.
 
 ### Deployment Tools
 - Streamlit
