@@ -137,7 +137,7 @@ else:
 current_weather_tab,forecast_tab,history_tab = st.tabs(["☀️Today's weather","📈Forecast","📒Historical weather"])
 # Current weather tab
 with current_weather_tab:
-    with st.container(gap=None):
+    with st.container(gap=None,horizontal_alignment="center"):
         current_weather_col1, current_weather_col2 = st.columns([0.4,0.6],border=True)
         with current_weather_col1:
             with st.container(height="content",horizontal=False,horizontal_alignment="center"):
@@ -274,7 +274,19 @@ with current_weather_tab:
                     fig.update_layout(title_x=0.3)
                     fig.update_xaxes(tickmode="linear")
                     st.plotly_chart(fig)
+        # Showing last fetched time of weather data in the web app in the local time of the searched location.
         st.markdown(f"Last updated on {response['current']['last_updated']} *({response['location']['tz_id']})*")
+
+        # Displaying location in scatter mapbox with satellite-streets map type.
+        with st.container(width=500):
+            current_location_df = pd.DataFrame({"lat":[int(selected_latitude_longitude[0])],
+                                                "lon":[int(selected_latitude_longitude[1])],
+                                                "location":[response["location"]["name"]],
+                                                "country":[response["location"]["country"]]})
+            fig = px.scatter_map(current_location_df,lat="lat",lon="lon",hover_name="location",hover_data=["country"],color_discrete_sequence=["red"],zoom=8)
+            fig.update_layout(map_style="satellite-streets")
+            fig.update_traces(marker=dict(size=18))
+            st.plotly_chart(fig)
 
 # 3 days weather forecasting displayed in tab.
 with forecast_tab:
@@ -346,3 +358,6 @@ with history_tab:
         st.plotly_chart(fig)
 
 # Outside tabs
+# Footer
+with st.bottom:
+    st.markdown("Copyright :material/copyright: 2026 All Rights Reserved. https://reshmaharidhas.github.io/")
